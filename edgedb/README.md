@@ -41,13 +41,11 @@ In production, should be running uvloop.
 
 using async def compiles the function as asynchronous
 
-await blocks further execution in an async function, it yields execution back to asyncio so it can switch to something else
-
 async function: Function that creates a coroutine when called. Define with async def. Can use await inside the function. The function itself is not awaitable.
 
 coroutine: Object created by calling an async function. It is awaitable, but only once. Low level building block.
 
-awaitable
+awaitable: Any object that can be awaited on. Await blocks further execution in an async function, it yields execution back to asyncio so it can switch to something else.
 
 Task: Wrapper for coroutines, managed by asyncio framework. 
 
