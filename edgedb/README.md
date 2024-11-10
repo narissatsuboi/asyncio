@@ -49,10 +49,35 @@ awaitable: Any object that can be awaited on. Await blocks further execution in 
 
 Task: Wrapper for coroutines, managed by asyncio framework. 
 
-future
+futures
 
 IF a timeout occurs, whatever we were waiting for is cancelled. A TimeoutError is raised. 
 
 Set these flags to detect unawaited awaitables in your code. 
 - PYTHONASYNCIODEBUG=1
 - PYTHONTRACEMALLOC=1 (local perf penality with this one)
+
+
+[4. Coroutines Under the Hood](https://www.youtube.com/watch?v=1LTHbmed3D4&list=PLhNSoGM2ik6SIkVGXWBwerucXjgP1rHmB&index=4)
+
+future: object serving as a container for a result we don't have yet, but will in the future. 
+
+cancel a future: don't need or cannot accept the result anymore. 
+
+fair scheduling, first in first out. 
+
+coroutines work by running callbacks. they run a single step of execution as a callback, and if theres any execution left, they use the trampoline pattern to schedule themselves back on the event loop.
+
+task is the gateway to coroutine computation. tasks are where the trampoline pattern is used, and coroutine is split into multiple discrete steps. 
+
+in the real world, there are many tasks happening at the same time, but each one runs a short amount a code until it encounters an await, and then schedules itself back on the event loop.
+
+network latency >>> computational cost of event loop and splitting coroutines into small tasks
+
+green threading / cooperative computation threads / background threads
+
+if a green thread runs too long, it can still bottleneck the event loop
+
+avoid blocking calls within async functions
+
+handle thousands of clients on a single asyncio main thread
